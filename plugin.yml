@@ -1,0 +1,5 @@
+name: UtilityBelt
+main: com.mcnsa.utilitybelt.UtilityBelt
+version: 1.0.0
+author: FuzzyWuzzie
+depend: [PermissionsEx]
