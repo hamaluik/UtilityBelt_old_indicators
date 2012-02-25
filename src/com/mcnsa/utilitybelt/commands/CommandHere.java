@@ -7,7 +7,6 @@ import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import com.mcnsa.utilitybelt.UtilityBelt;
-import com.mcnsa.utilitybelt.util.ColourHandler;
 import com.mcnsa.utilitybelt.util.Command;
 import com.mcnsa.utilitybelt.util.CommandInfo;
 
@@ -26,9 +25,16 @@ public class CommandHere implements Command {
 		float z = (float)targetBlock.getZ() + 0.5f;
 		String targetString = "\247b\247d\247c\247b\247d\247cq?=$markerHere=" + x + "," + y + "," + z;
 		
+		// get their colour
+		float r = 1f;
+		float g = 0f;
+		float b = 1f;
+		String targetColour = "\247b\247d\247c\247b\247d\247cq?=$markerColour=" + r + "," + g + "," + b;
+		
 		// announce to all connected players
 		Player[] players = plugin.getServer().getOnlinePlayers();
 		for(int i = 0; i < players.length; i++) {
+			((CraftPlayer)players[i]).getHandle().netServerHandler.networkManager.queue(new Packet3Chat(targetColour));
 			((CraftPlayer)players[i]).getHandle().netServerHandler.networkManager.queue(new Packet3Chat(targetString));
 		}
 		
