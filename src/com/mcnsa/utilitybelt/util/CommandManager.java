@@ -24,6 +24,7 @@ public class CommandManager {
 		// TODO: dynamically load commands ALA CommandBook
 		//plugin.debug("registering commands...");
 		registerCommand(new CommandVerify(plugin));
+		registerCommand(new CommandHere(plugin));
 		//plugin.debug("commands all registered!");
 	}
 
@@ -41,7 +42,7 @@ public class CommandManager {
 				CommandInfo ci = (CommandInfo)annotations[i];
 				
 				// get the deets!
-				//plugin.debug("with alias: " + ci.alias());
+				//plugin.debug("\twith alias: " + ci.alias());
 				//plugin.debug("with perms: " + ci.permission());
 				//plugin.debug("with usage: " + ci.usage());
 				//plugin.debug("with description: " + ci.description());
