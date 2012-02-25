@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 
 import com.mcnsa.utilitybelt.listeners.PlayerListener;
 import com.mcnsa.utilitybelt.util.CommandManager;
+import com.mcnsa.utilitybelt.util.TeamTracker;
 
 import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
@@ -20,8 +21,9 @@ public class UtilityBelt extends JavaPlugin {
 	public PermissionManager permissions = null;
 	
 	// and internal things
-	public PlayerListener playerListener = null;
 	public CommandManager commandManager = null;
+	public PlayerListener playerListener = null;
+	public TeamTracker teamTracker = null;
 
 	public void onEnable() {
 		// set up permissions
@@ -32,6 +34,9 @@ public class UtilityBelt extends JavaPlugin {
 
 		// set up listeners
 		playerListener = new PlayerListener(this);
+		
+		// and track teams
+		teamTracker = new TeamTracker();
 		
 		// routines for when the plugin gets enabled
 		log("plugin enabled!");

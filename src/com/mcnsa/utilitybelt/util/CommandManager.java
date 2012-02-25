@@ -25,6 +25,11 @@ public class CommandManager {
 		//plugin.debug("registering commands...");
 		registerCommand(new CommandVerify(plugin));
 		registerCommand(new CommandHere(plugin));
+		registerCommand(new CommandTimer(plugin));
+		registerCommand(new CommandA(plugin));
+		registerCommand(new CommandB(plugin));
+		registerCommand(new CommandCancel(plugin));
+		registerCommand(new CommandInviteList(plugin));
 		//plugin.debug("commands all registered!");
 	}
 
@@ -61,7 +66,7 @@ public class CommandManager {
 	// handle commands
 	public Boolean handleCommand(Player player, String command) {
 		// get the actual command
-		//plugin.debug(player.getName() + " sent command: " + command);
+		plugin.debug(player.getName() + " sent command: " + command);
 		
 		// strip off the proceeding "/"
 		command = command.substring(1);
@@ -79,7 +84,7 @@ public class CommandManager {
 		// find the command
 		if(!commands.containsKey(tokens[0])) {
 			// we're not handling it
-			//plugin.debug("not handling command: " + tokens[0]);
+			plugin.debug("not handling command: " + tokens[0]);
 			return false;
 		}
 		

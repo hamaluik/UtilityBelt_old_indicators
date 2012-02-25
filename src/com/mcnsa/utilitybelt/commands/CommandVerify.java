@@ -9,14 +9,13 @@ import com.mcnsa.utilitybelt.util.CommandInfo;
 
 @CommandInfo(alias = "@$&#_utilitybelt", visible = false)
 public class CommandVerify implements Command {
-	@SuppressWarnings("unused")
 	private static UtilityBelt plugin = null;
 	public CommandVerify(UtilityBelt instance) {
 		plugin = instance;
 	}
 
 	public Boolean handle(Player player, String sArgs) {
-		// TODO: track player
+		plugin.teamTracker.playerHasMod(player.getName());
 		ColourHandler.sendMessage(player, "&aYour utility belt is enabled!");
 		
 		// and we handled it!

@@ -13,10 +13,10 @@ import com.mcnsa.utilitybelt.util.Command;
 import com.mcnsa.utilitybelt.util.CommandInfo;
 import com.mcnsa.utilitybelt.util.TeamTracker.Colour;
 
-@CommandInfo(alias = "@$&#_utility_here", visible = false)
-public class CommandHere implements Command {
+@CommandInfo(alias = "@$&#_utility_b", visible = false)
+public class CommandB implements Command {
 	private static UtilityBelt plugin = null;
-	public CommandHere(UtilityBelt instance) {
+	public CommandB(UtilityBelt instance) {
 		plugin = instance;
 	}
 
@@ -26,10 +26,10 @@ public class CommandHere implements Command {
 		float x = (float)targetBlock.getX() + 0.5f;
 		float y = (float)targetBlock.getY() + 1.5f;
 		float z = (float)targetBlock.getZ() + 0.5f;
-		String targetString = "\247b\247d\247c\247b\247d\247cq?=$markerHere=" + x + "," + y + "," + z;
+		String targetString = "\247b\247d\247c\247b\247d\247cq?=$markerB=" + x + "," + y + "," + z;
 		
 		// get their id
-		String idString = "\247b\247d\247c\247b\247d\247cq?=$markerId=" + player.getName() + ".here";
+		String idString = "\247b\247d\247c\247b\247d\247cq?=$markerId=" + player.getName() + ".B";
 		
 		// get their colour
 		float r = 1, g = 1, b = 1;
