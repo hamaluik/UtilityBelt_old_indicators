@@ -33,6 +33,23 @@ public class PlayerListener implements Listener {
 		// see if they're already on a team
 		String team = plugin.teamTracker.playersTeam(event.getPlayer().getName());
 		if(!team.equals("")) {
+			// remove all their markers
+			// now close all the markers the player had open
+			String targetCancelHere = "\247b\247d\247c\247b\247d\247cq?=$markerCancel="+event.getPlayer().getName()+".here";
+			String targetCancelTimer = "\247b\247d\247c\247b\247d\247cq?=$markerCancel="+event.getPlayer().getName()+".timer";
+			String targetCancelA = "\247b\247d\247c\247b\247d\247cq?=$markerCancel="+event.getPlayer().getName()+".A";
+			String targetCancelB = "\247b\247d\247c\247b\247d\247cq?=$markerCancel="+event.getPlayer().getName()+".B";
+			
+			// now announce to their team
+			ArrayList<String> preTeamPlayers = plugin.teamTracker.playersOnPlayersTeam(event.getPlayer().getName());
+			for(int i = 0; i < preTeamPlayers.size(); i++) {
+				Player pl = plugin.getServer().getPlayer(preTeamPlayers.get(i));
+				((CraftPlayer)pl).getHandle().netServerHandler.networkManager.queue(new Packet3Chat(targetCancelHere));
+				((CraftPlayer)pl).getHandle().netServerHandler.networkManager.queue(new Packet3Chat(targetCancelTimer));
+				((CraftPlayer)pl).getHandle().netServerHandler.networkManager.queue(new Packet3Chat(targetCancelA));
+				((CraftPlayer)pl).getHandle().netServerHandler.networkManager.queue(new Packet3Chat(targetCancelB));
+			}
+			
 			// ok, remove them from the team
 			boolean teamExists = plugin.teamTracker.leaveTeam(event.getPlayer().getName());
 			
