@@ -36,7 +36,7 @@ public class UtilityBelt extends JavaPlugin {
 		playerListener = new PlayerListener(this);
 		
 		// and track teams
-		teamTracker = new TeamTracker();
+		teamTracker = new TeamTracker(this);
 		
 		// routines for when the plugin gets enabled
 		log("plugin enabled!");

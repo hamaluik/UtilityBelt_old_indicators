@@ -19,7 +19,6 @@ public class CommandInviteList implements Command {
 	}
 
 	public Boolean handle(Player player, String sArgs) {
-		// now close all the markers the player had open
 		String start = "\247b\247d\247c\247b\247d\247cq?=$playerList=start";
 		String end = "\247b\247d\247c\247b\247d\247cq?=$playerList=end";
 		
@@ -28,7 +27,9 @@ public class CommandInviteList implements Command {
 		// loop through all players who have the mod
 		ArrayList<String> players = plugin.teamTracker.playersAvailableForInvite();
 		for(int i = 0; i < players.size(); i++) {
-			((CraftPlayer)player).getHandle().netServerHandler.networkManager.queue(new Packet3Chat("\247b\247d\247c\247b\247d\247cq?=$playerList=" + players.get(i)));
+			if(!players.get(i).equals(player.getName())) {
+				((CraftPlayer)player).getHandle().netServerHandler.networkManager.queue(new Packet3Chat("\247b\247d\247c\247b\247d\247cq?=$playerList=" + players.get(i)));
+			}
 		}
 		((CraftPlayer)player).getHandle().netServerHandler.networkManager.queue(new Packet3Chat(end));
 		

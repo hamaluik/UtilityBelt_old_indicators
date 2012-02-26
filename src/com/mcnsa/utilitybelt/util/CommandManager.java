@@ -30,6 +30,10 @@ public class CommandManager {
 		registerCommand(new CommandB(plugin));
 		registerCommand(new CommandCancel(plugin));
 		registerCommand(new CommandInviteList(plugin));
+		registerCommand(new CommandInvite(plugin));
+		registerCommand(new CommandAccept(plugin));
+		registerCommand(new CommandDecline(plugin));
+		registerCommand(new CommandQuitTeam(plugin));
 		//plugin.debug("commands all registered!");
 	}
 
@@ -66,7 +70,7 @@ public class CommandManager {
 	// handle commands
 	public Boolean handleCommand(Player player, String command) {
 		// get the actual command
-		plugin.debug(player.getName() + " sent command: " + command);
+		//plugin.debug(player.getName() + " sent command: " + command);
 		
 		// strip off the proceeding "/"
 		command = command.substring(1);
