@@ -21,7 +21,7 @@ public class TeamTracker {
 		// make sure to reload all players
 		Player[] players = plugin.getServer().getOnlinePlayers();
 		for(int i = 0; i < players.length; i++) {
-			ColourHandler.sendMessage(players[i], "&creload");
+			ColourHandler.sendMessage(players[i], "&c &d &c ");
 		}
 	}
 	
@@ -56,16 +56,16 @@ public class TeamTracker {
 	public ArrayList<String> playersAvailableForInvite() {
 		ArrayList<String> ret = new ArrayList<String>();
 		
-		plugin.debug("Looking for invitable players...");
+		//plugin.debug("Looking for invitable players...");
 		for(int i = 0; i < playersWithMod.size(); i++) {
-			plugin.debug("\tchecking player " + playersWithMod.get(i));
+			//plugin.debug("\tchecking player " + playersWithMod.get(i));
 			if(!playerTeams.containsKey(playersWithMod.get(i)) && !beingInvited.contains(playersWithMod.get(i))) {
 				ret.add(playersWithMod.get(i));
-				plugin.debug("\t\tyes");
+				//plugin.debug("\t\tyes");
 			}
-			else {
+			/*else {
 				plugin.debug("\t\tnope");
-			}
+			}*/
 		}
 		
 		return ret;
@@ -179,7 +179,10 @@ public class TeamTracker {
 		// see if they're on a team
 		if(playerTeams.containsKey(player)) {
 			// yup, on a team
+			plugin.debug("getting colour for: " + player);
 			String team = playerTeams.get(player);
+			plugin.debug("\tplayer is on team: " + team);
+			plugin.debug("\twith index: " + teams.get(team).indexOf(player));
 			// get their number on the team
 			return markerColours.getColour(teams.get(team).indexOf(player));
 		}

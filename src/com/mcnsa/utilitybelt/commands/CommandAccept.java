@@ -59,7 +59,7 @@ public class CommandAccept implements Command {
 			((CraftPlayer)pl).getHandle().netServerHandler.networkManager.queue(new Packet3Chat(start));
 			// loop through all players who have the mod
 			for(int j = 0; j < players.size(); j++) {
-				((CraftPlayer)pl).getHandle().netServerHandler.networkManager.queue(new Packet3Chat("\247b\247d\247c\247b\247d\247cq?=$teamList=" + ColourHandler.processColours(plugin.teamTracker.playerColour(players.get(i)).strVal + players.get(j))));
+				((CraftPlayer)pl).getHandle().netServerHandler.networkManager.queue(new Packet3Chat("\247b\247d\247c\247b\247d\247cq?=$teamList=" + ColourHandler.processColours(plugin.teamTracker.playerColour(players.get(j)).strVal + players.get(j))));
 			}
 			((CraftPlayer)pl).getHandle().netServerHandler.networkManager.queue(new Packet3Chat(end));
 		}

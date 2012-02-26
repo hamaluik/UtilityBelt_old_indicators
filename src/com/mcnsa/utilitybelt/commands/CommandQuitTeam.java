@@ -60,11 +60,18 @@ public class CommandQuitTeam implements Command {
 				((CraftPlayer)pl).getHandle().netServerHandler.networkManager.queue(new Packet3Chat(start));
 				// loop through all players who have the mod
 				for(int j = 0; j < players.size(); j++) {
-					((CraftPlayer)pl).getHandle().netServerHandler.networkManager.queue(new Packet3Chat("\247b\247d\247c\247b\247d\247cq?=$teamList=" + ColourHandler.processColours(plugin.teamTracker.playerColour(players.get(i)).strVal + players.get(j))));
+					((CraftPlayer)pl).getHandle().netServerHandler.networkManager.queue(new Packet3Chat("\247b\247d\247c\247b\247d\247cq?=$teamList=" + ColourHandler.processColours(plugin.teamTracker.playerColour(players.get(j)).strVal + players.get(j))));
 				}
 				((CraftPlayer)pl).getHandle().netServerHandler.networkManager.queue(new Packet3Chat(end));
 			}
 		}
+		
+		// now update the player who quit
+		String start = "\247b\247d\247c\247b\247d\247cq?=$teamList=start";
+		String end = "\247b\247d\247c\247b\247d\247cq?=$teamList=end";
+		((CraftPlayer)player).getHandle().netServerHandler.networkManager.queue(new Packet3Chat(start));
+		((CraftPlayer)player).getHandle().netServerHandler.networkManager.queue(new Packet3Chat("\247b\247d\247c\247b\247d\247cq?=$teamList=" + ColourHandler.processColours(plugin.teamTracker.playerColour(player.getName()).strVal + player.getName())));
+		((CraftPlayer)player).getHandle().netServerHandler.networkManager.queue(new Packet3Chat(end));
 		
 		// and we handled it!
 		return true;
