@@ -44,8 +44,28 @@ public class CommandQuitTeam implements Command {
 			((CraftPlayer)pl).getHandle().netServerHandler.networkManager.queue(new Packet3Chat(targetCancelB));
 		}
 		
+		// get the current team to see if someone was still in the team
+		plugin.debug(player.getName() + " is quitting their team!");
+		ArrayList<String> teamArrayBeforeQuit = plugin.teamTracker.playersOnTeam(team);
+		plugin.debug("\tcurrent number of players on their team: " + teamArrayBeforeQuit.size());
+		if(teamArrayBeforeQuit.size() == 2) {
+			plugin.debug(player.getName() + " was leaving a near-empty team!");
+			// get the only remaining player
+			String remainingPlayer = teamArrayBeforeQuit.get(1 - teamArrayBeforeQuit.indexOf(player.getName()));
+			plugin.debug("\tthe remaining player is: " + remainingPlayer);
+			// now tell them who's on their team
+			String start = "\247b\247d\247c\247b\247d\247cq?=$teamList=start";
+			String end = "\247b\247d\247c\247b\247d\247cq?=$teamList=end";
+
+			Player pl = plugin.getServer().getPlayer(remainingPlayer);
+			((CraftPlayer)pl).getHandle().netServerHandler.networkManager.queue(new Packet3Chat(start));
+			((CraftPlayer)pl).getHandle().netServerHandler.networkManager.queue(new Packet3Chat("\247b\247d\247c\247b\247d\247cq?=$teamList=" + ColourHandler.processColours(plugin.teamTracker.markerColours.getColour(0).strVal + remainingPlayer)));
+			((CraftPlayer)pl).getHandle().netServerHandler.networkManager.queue(new Packet3Chat(end));
+		}
+		
 		// ok, remove them from the team
 		boolean teamExists = plugin.teamTracker.leaveTeam(player.getName());
+		plugin.debug("\tteam exists: " + teamExists);
 		
 		if(teamExists) {
 			// now update everyone who's on this team about the changes

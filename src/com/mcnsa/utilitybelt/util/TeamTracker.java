@@ -12,7 +12,7 @@ public class TeamTracker {
 	private HashMap<String, ArrayList<String>> teams = new HashMap<String, ArrayList<String>>();
 	private HashMap<String, String> playerTeams = new HashMap<String, String>();
 	private ArrayList<String> beingInvited = new ArrayList<String>();
-	private MarkerColour markerColours = new MarkerColour();
+	public MarkerColour markerColours = new MarkerColour();
 	private UtilityBelt plugin = null;
 	
 	public TeamTracker(UtilityBelt instance) {
@@ -59,12 +59,18 @@ public class TeamTracker {
 		//plugin.debug("Looking for invitable players...");
 		for(int i = 0; i < playersWithMod.size(); i++) {
 			//plugin.debug("\tchecking player " + playersWithMod.get(i));
-			if(!playerTeams.containsKey(playersWithMod.get(i)) && !beingInvited.contains(playersWithMod.get(i))) {
-				ret.add(playersWithMod.get(i));
-				//plugin.debug("\t\tyes");
+			if(!playerTeams.containsKey(playersWithMod.get(i))) {
+				//plugin.debug("\t\tyup: player not on any teams");
+				if(!beingInvited.contains(playersWithMod.get(i))) {
+					//plugin.debug("\t\t\tyup: player not being invited");
+					ret.add(playersWithMod.get(i));
+				}
+				/*else {
+					plugin.debug("\t\t\tnope: player being invited");
+				}*/
 			}
 			/*else {
-				plugin.debug("\t\tnope");
+				plugin.debug("\t\tnope: player on a team");
 			}*/
 		}
 		
@@ -147,25 +153,39 @@ public class TeamTracker {
 	}
 	
 	public boolean leaveTeam(String player) {
+		//plugin.debug("player " + player + " is leaving their team!");
 		// make sure it's a valid team
 		String team = playersTeam(player);
 		if(!teams.containsKey(team)) {
 			// the team doesn't exist
+			//plugin.debug("\tteam didn't exist");
 			return false;
 		}
 		
 		// make sure they're on the team
 		if(!teams.get(team).contains(player)) {
 			// the team does exist
+			//plugin.debug("\tplayer wasn't on their supposed team");
 			return true;
 		}
 		
 		// ok, remove them
+		//plugin.debug("\tremoving...");
 		teams.get(team).remove(player);
 		playerTeams.remove(player);
+		//plugin.debug("\tplayerTeams.containsKey(player) = " + playerTeams.containsKey(player));
 		
-		// now if the team is empty, remove it
-		if(teams.get(team).size() < 1) {
+		// now if the team is "empty", remove it
+		if(teams.get(team).size() < 2) {
+			plugin.debug("team was empty, removing team!");
+			
+			// if there was still someone in the team, kick them out
+			if(teams.get(team).size() == 1) {
+				player = teams.get(team).get(0);
+				teams.get(team).remove(player);
+				playerTeams.remove(player);
+			}
+			
 			teams.remove(team);
 			// the team doesn't exist
 			return false;
@@ -179,10 +199,7 @@ public class TeamTracker {
 		// see if they're on a team
 		if(playerTeams.containsKey(player)) {
 			// yup, on a team
-			plugin.debug("getting colour for: " + player);
 			String team = playerTeams.get(player);
-			plugin.debug("\tplayer is on team: " + team);
-			plugin.debug("\twith index: " + teams.get(team).indexOf(player));
 			// get their number on the team
 			return markerColours.getColour(teams.get(team).indexOf(player));
 		}

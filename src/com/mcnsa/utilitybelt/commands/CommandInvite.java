@@ -21,6 +21,12 @@ public class CommandInvite implements Command {
 		// get the player's name
 		String inviteTarget = sArgs;
 		
+		// make sure our team isn't full
+		if(plugin.teamTracker.playersOnPlayersTeam(player.getName()).size() >= 8) {
+			ColourHandler.sendMessage(player, "&cError: your team is full!");
+			return true;
+		}
+		
 		// make sure they're online
 		if(plugin.getServer().getPlayerExact(inviteTarget) == null) {
 			ColourHandler.sendMessage(player, "&cError: that player isn't online anymore!");
